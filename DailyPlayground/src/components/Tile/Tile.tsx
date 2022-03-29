@@ -1,5 +1,5 @@
 import { DailyTrackState } from '@daily-co/react-native-daily-js';
-import React, { useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   Text,
   View,
@@ -64,6 +64,11 @@ function getTrackUnavailableMessage(
 
 export default function Tile(props: Props) {
   const orientation = useOrientation();
+  const [should, setShould] = useState(false);
+
+  useEffect(() => {
+    const int = setInterval(() => setShould((should) => !should), 3000);
+  }, []);
 
   const videoTrack = useMemo(() => {
     return props.videoTrackState && props.videoTrackState.state === 'playable'
@@ -199,7 +204,7 @@ export default function Tile(props: Props) {
           : styles.containerFullLandscape;
       break;
   }
-  return (
+  return should ? (
     <View
       style={[
         styles.container,
@@ -213,7 +218,7 @@ export default function Tile(props: Props) {
       {cornerMessageComponent}
       {muteOverlayComponent}
     </View>
-  );
+  ) : null;
 }
 
 const styles = StyleSheet.create({

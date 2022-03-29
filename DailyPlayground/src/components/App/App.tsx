@@ -58,6 +58,10 @@ const App = () => {
   >(undefined);
   const orientation = useOrientation();
 
+  useEffect(() => {
+    setRoomUrl('https://sanctuary-test.daily.co/healhaus-test');
+  }, []);
+
   /**
    * Uncomment to set up debugging globals.
    */
